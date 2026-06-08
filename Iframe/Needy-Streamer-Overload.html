@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEEDY STREAMER OVERLOAD</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: #120b12; overflow: hidden; }
+
+    #back-btn {
+      position: fixed; top: 12px; left: 12px; z-index: 1000;
+      background: rgba(0,0,0,0.75); color: #fff; border: 1px solid #22c55e;
+      padding: 8px 16px; border-radius: 8px; font-size: 13px;
+      cursor: pointer; text-decoration: none; font-family: 'Segoe UI', sans-serif;
+      transition: background 0.2s;
+    }
+    #back-btn:hover { background: #15803d; }
+
+    #game-frame {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: #120b12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      z-index: 500;
+    }
+
+    #overlay .thumb-wrap {
+      position: relative;
+      cursor: pointer;
+    }
+    #overlay .thumb-wrap:hover .play-icon { transform: translate(-50%, -50%) scale(1.15); }
+
+    #overlay .thumb {
+      width: 480px;
+      max-width: 90vw;
+      aspect-ratio: 460/215;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid #22c55e55;
+      box-shadow: 0 4px 40px #22c55e44;
+      display: block;
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px;
+      background: rgba(0,0,0,0.65);
+      border: 3px solid #4ade80;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.18s;
+      pointer-events: none;
+    }
+    .play-icon::after {
+      content: '';
+      display: block;
+      margin-left: 6px;
+      border-style: solid;
+      border-width: 14px 0 14px 26px;
+      border-color: transparent transparent transparent #4ade80;
+    }
+
+    #overlay h2 {
+      font-family: 'Segoe UI', sans-serif; font-size: 22px;
+      background: linear-gradient(90deg, #4ade80, #22c55e);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    #overlay p {
+      font-family: 'Segoe UI', sans-serif; font-size: 13px;
+      color: #4ade8088;
+    }
+
+    #close-btn {
+      position: fixed;
+      top: 12px; right: 12px;
+      z-index: 1001;
+      width: 38px; height: 38px;
+      background: rgba(0,0,0,0.75);
+      border: 1px solid #ef444488;
+      border-radius: 50%;
+      color: #ef4444;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    #close-btn:hover { background: #7f1d1d; border-color: #ef4444; }
+    #close-btn.visible { display: flex; }
+  </style>
+</head>
+<body>
+
+
+<iframe
+  id="game-frame"
+  src="about:blank"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+></iframe>
+
+<div id="overlay">
+  <div class="thumb-wrap" id="start-btn">
+    <img
+      class="thumb"
+      src="https://cdn.akamai.steamstatic.com/steam/apps/1451940/header.jpg"
+      alt="NEEDY STREAMER OVERLOAD"
+      onerror="this.src='https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1451940/capsule_616x353.jpg'"
+    >
+    <div class="play-icon"></div>
+  </div>
+  <h2>💻 NEEDY STREAMER OVERLOAD</h2>
+  <p>クリックしてゲームを開始</p>
+</div>
+
+<script>
+  var overlay   = document.getElementById('overlay');
+  var frame     = document.getElementById('game-frame');
+  var closeBtn  = document.getElementById('close-btn');
+  var startBtn  = document.getElementById('start-btn');
+
+  function startGame() {
+    frame.src = 'https://selenite.cc/resources/semag/nso_fix/index.html';
+    overlay.style.display = 'none';
+    closeBtn.classList.add('visible');
+  }
+
+  function closeGame() {
+    frame.src = 'about:blank';
+    overlay.style.display = 'flex';
+    closeBtn.classList.remove('visible');
+  }
+
+  startBtn.addEventListener('click', startGame);
+  closeBtn.addEventListener('click', closeGame);
+</script>
+</body>
+</html>
